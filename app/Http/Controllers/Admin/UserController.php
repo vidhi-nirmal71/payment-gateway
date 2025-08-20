@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Enum\AnnouncementTypeEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
-use App\Http\Traits\RedisTrait;
 use App\Models\Announcement;
 use App\Models\Database;
 use App\Models\EmployeeShift;
@@ -22,8 +21,6 @@ use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
-    use RedisTrait;
-
     public function index(Request $request)
     {
         $roles = Role::all();
