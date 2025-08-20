@@ -1,0 +1,11 @@
+{
+    "name": "itpath/lighthouse",
+    "description": "Lighthouse package for the lighthouse",
+    "autoload": {
+        "psr-4": {
+            "Itpath\\Lighthouse\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "require": {}
+}

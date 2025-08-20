@@ -1,0 +1,22 @@
+{
+  "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^38.0.1"
+  },
+  "devDependencies": {
+    "laravel-echo": "^1.15.1",
+    "pusher-js": "^8.2.0"
+  },
+  "name": "bms",
+  "version": "1.0.0",
+  "main": "postcss.config.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

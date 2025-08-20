@@ -1,0 +1,438 @@
+.nav-tabs .nav-item .nav-link {
+    font-weight: 500;
+    padding: 0.3rem 0.8rem;
+}
+.ck-editor__editable_inline {
+    min-height: 200px;
+}
+.table td, .table th {
+    padding: 6px 12px;
+}
+.copyCommentBlock .accordion-button:not(.product) {
+    padding: 0.1rem 1.125rem;
+    display: inline;
+    width: 80%;
+}
+.copyCommentBlock .accordion-button:not(.product)::after {
+    background-image: none;
+}
+.copyCommentBlock .accordion-button:not(.product):not(.collapsed)::after {
+    background-image: none;
+}
+.tab-content {
+    padding: 0.1rem 0.5rem;
+}
+.nav-link {
+    padding: 0.3rem 1.35rem;
+}
+.cursor {
+    cursor: pointer;
+}
+form .error:not(li):not(input) {
+    font-size: 100%;
+}
+form .error:not(li):not(input):focus {
+    border: 1px solid red;
+    outline: none; /* Optional: Removes the default outline */
+}
+.error{
+    margin-top: 0.25rem;
+    border: 1px solid red;
+    outline: none; /* Optional: Removes the default outline */
+}
+.error[for] {
+        border: none; /* Remove the border from the label element */
+}
+td p { margin-bottom: 0px; }
+.ui-timepicker-table td a, .ui-timepicker-table td span { width: auto !important; font-size: 14px;}
+#attachment\[1\]\[type\]-error { border: none; }
+.modal-body{
+    padding-top: 0.75rem;
+}
+div#taskTable, div.dashboardtabPage, div#crTable, div#commentBtnData, div#docTable, div#escalationChannelTable, div#reminderTable, div#timesheetPendingTableData, div#timesheetApprovedTableData, div#noticeTableData, div#projhoursTable, div#projectPortfolioTableData {
+    position: relative;
+}
+.copyCommentBlock{
+    display: flex;
+    justify-content: space-between;
+    border-radius: 5px;
+    border-top: 1px solid #dddddd;
+    margin-top: 5px;
+    padding-right: 1px;
+}
+.copyCommentBlock span.rounded-pill{
+    display: inline-block;
+    padding: 5px 5px;
+    border-radius: 20px;
+    font-weight: bold;
+}
+.copyCommentBlock .copySpan{
+    font-size: 14px;
+    display: block;
+    text-align: right;
+    line-height: 35px;
+}
+#viewMoreComment{
+    color:#697a8d; background-color: #f0f2f4; border-radius: 5px;
+}
+.dashboard-widget {
+    background: #F5F6FA;
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 10px;
+    min-height: 110px;
+}
+.dashboard-widget h6.dashboard-widget-header {
+    padding: 5px;
+    margin: 0;
+    text-align: center;
+    color: #000000;
+}
+.dashboard-widget table, .dashboard-widget table  {
+    margin: 0;
+}
+#teamLeaveList span.empName{
+    color: #566a7f;
+}
+h4.card-title{
+    color: #696cff;
+}
+.widget.dashboard-widget {
+    position: relative;
+    border-bottom: none;
+    transition: all .2s ease-in-out;
+    z-index: 1;
+    color: #c3c4ff;
+}
+.widget.dashboard-widget:hover::after {
+border-bottom-color: #696cff;
+border-bottom-width: 3px;
+}
+.widget.dashboard-widget table, .widget.dashboard-widget li{
+    color: #697a8d;
+}
+.widget.dashboard-widget::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-bottom-width: 2px;
+    border-bottom-style: solid;
+    border-radius: 0.5rem;
+    transition: all .2s ease-in-out;
+    z-index: -1;
+}
+.single-chart {
+    margin-top: 5px;
+    display: inline-block;
+    width: 100%;
+}
+svg:not(:root) {
+    overflow: hidden;
+}
+.circular-chart {
+    display: block;
+    max-width: 130px;
+    max-height: 130px;
+    margin: 0 auto;
+}
+
+.circle-bg {
+    fill: none;
+    stroke: #FFF;
+    stroke-width: 3;
+}
+.circle {
+    fill: none;
+    stroke-width: 3.8;
+    stroke-linecap: round;
+    animation: progress 1s ease-out forwards;
+}
+.percentages {
+    fill: #566a7f;
+    font-family: roboto-condensed, sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 8px;
+}
+.dashboard-widget.secondRow{
+    height: 208px;
+}
+#userHourTable .table td, .table th {
+    padding: 3px 6px;
+}
+.title {
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+}
+.user-filter .select2-container, .user-task-filter .select2-container, .task-status-filter .select2-container {
+    min-width: 205px;
+    width: auto !important;
+}
+.projectTimesheetType .select2-container{
+    min-width: 205px;
+    width: auto !important;
+}
+.projectTaskList .select2-container{
+    min-width: 205px;
+    width: auto !important;
+}
+.emp-filter .select2-container{
+    min-width: 205px;
+    width: auto !important;
+}
+.projectNAType .select2-container{
+    min-width: 205px;
+    width: auto !important;
+}
+
+.ct-user-filter .select2-container{
+    min-width: 280px;
+    width: auto !important;
+}
+
+.ct-task-filter .select2-container{
+    min-width: 200px;
+    max-width: 200px;
+    width: auto !important;
+}
+
+.ct-team-filter .select2-container{
+    min-width: 280px;
+    width: 100% !important;
+}
+
+#taskStatistics p{
+    color: #566a7f;
+}
+#taskStatistics .progress-bar{
+    font-size: 14px;
+    box-shadow: none;
+}
+/* utilization percentage widgets circle bar chart css*/
+.progresspercentage{
+    position: relative;
+    margin: 4px;
+    float:left;
+    text-align: center;
+}
+.barOverflowpercentage{ /* Wraps the rotating .bar */
+    position: relative;
+    overflow: hidden; /* Comment this line to understand the trick */
+    width: 90px; height: 45px; /* Half circle (overflow) */
+    margin-bottom: -20px; /* bring the numbers up */
+}
+.barpercentage{
+    position: absolute;
+    top: 0; left: 0;
+    width: 90px; height: 90px; /* full circle! */
+    border-radius: 50%;
+    box-sizing: border-box;
+    border: 10px solid white;
+    border-bottom-color: #a5236e;
+    border-right-color: #a5236e;
+}
+#pendingTimesheetTable .form-check-input, #task_table .form-check-input{
+    width: 18px;
+    height: 18px;
+}
+#checkAllPending{ padding-left: 12px; }
+@media (max-width: 575.98px){
+    .user-filter, .user-filter .select2-container, .emp-filter, .emp-filter .select2-container, .projectNAType, .projectNAType .select2-container, #startDateBlock, #endDateBlock, #startCtDateBlock, #endCtDateBlock,.projectTimesheetType, .projectTimesheetType .select2-container, .projectTaskList, .projectTaskList .select2-container,.user-task-filter, .user-task-filter .select2-container, .task-status-filter , .task-status-filter .select2-container, #projectTaskFilter, #projectTaskFilter .select2-container, .ct-user-filter, .ct-user-filter .select2-container, .ct-team-filter, .ct-team-filter .select2-container, .ct-task-filter, .ct-task-filter .select2-container{
+        width: 100% !important;
+    }
+}
+
+@media (min-width: 1200px) {
+    #timesheetModal .modal-xl , #clientTimesheetModal .modal-xl{
+        max-width: 1350px;
+    }
+}
+.titleHeader.ps5{
+    padding-left: 38px;
+}
+.technology .select2-container,
+.industry .select2-container,
+.country .select2-container
+.database .select2-container{
+    width: 100% !important;
+}
+.widgetShow{
+    display: block;
+}
+.widgetHide{
+    display: none;
+}
+#showAllWidget{
+    position: fixed;
+    height: 45px !important;
+    width: 45px !important;
+    z-index: 150 !important;
+    bottom: 2.5rem;
+    right: 2.5rem;
+}
+#showAllWidget i.bx.bx-plus {
+    font-size: 40px;
+}
+.dz-image img {
+    cursor: pointer !important;
+}
+#imagePreviewContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+#imagePreviewContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    padding: 20px; /* add padding to ensure space around image on small screens */
+    box-sizing: border-box;
+}
+
+#imagePreviewBox {
+    position: relative;
+    background: white;
+    border-radius: 8px;
+    padding: 10px;
+    /* max-width: 90vw; responsive */
+    /* max-height: 90vh; */
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* #imagePreviewBox img {
+    max-width: 100%;
+    max-height: 100%;
+    height: auto;
+    width: auto;
+    object-fit: contain;
+    display: block;
+} */
+
+#closePreview {
+    position: absolute;
+    top: -18px;
+    right: -18px;
+    background: #ffffff;
+    border: none;
+    cursor: pointer;
+    color: #a1acb8;
+    z-index: 4;
+    display: inline-flex;
+    width: 36px;
+    height: 36px;
+    align-items: center;
+    justify-content: center;
+    line-height: 16px;
+    border-radius: 6px;
+    box-shadow: 0 0.125rem 0.25rem rgba(161, 172, 184, 0.4);
+    transition: all 0.23s ease 0.1s;
+}
+#closePreview:hover {
+    transform: translate(-5px, 5px);
+}
+#closePreview .bx-x {
+    font-size: 26px !important;
+}
+.new-client-timesheet-section .accordion .accordion-item.active {
+    box-shadow: none !important;
+}
+.alias-input-css {
+    padding: 0.1375rem 0.1rem !important;
+}
+
+@media (max-width: 768px) { 
+    #clientTimesheetAccordion .tableContainer {
+        max-height: 300px; /* Fixed height */
+        overflow-y: auto; /* Enable scrolling */
+    }
+
+    /* Keep table headers visible while scrolling */
+    #clientTimesheetAccordion .tableContainer table thead {
+        position: sticky;
+        top: 0;
+        background: white;
+        z-index: 2;
+    }
+}
+#aliasForm{
+    border: 1px solid #e7e7ff;
+    border-top: none;
+    border-radius: 0 0 0.5rem 0.5rem;
+}
+#TimesheetEntryHrs.form-control:disabled, #TimesheetEntryHrs.form-control[readonly] {
+    background-color: #ffffff;
+}
+.col-lg-6 {
+    width: 50% !important;
+}
+
+/* Client Timesheet Filter */
+#durationCtFilter .dropdown-menu{
+    z-index: 1200;
+    right: auto !important;
+}
+button#filterCtDrop {
+    background-color: rgb(248, 249, 250);
+    color: rgb(68, 68, 68);
+    border-color: rgb(221, 221, 221);
+    padding-left: 5px !important;
+    padding-right: 10px !important;
+    padding-bottom: 5px;
+    height: 39px;
+}
+#durationCtFilter .dropdown-toggle::after {
+    margin-top: 1px;
+}
+#filter-ct-text{
+    font-family: var(--bs-body-font-family);
+    font-size: 16px;
+    margin-left: 5px;
+}
+
+/* Client Timesheet Form Filter */
+#durationCtFormFilter .dropdown-menu{
+    z-index: 1200;
+    right: auto !important;
+}
+button#filterCtFormDrop {
+    background-color: rgb(248, 249, 250);
+    color: rgb(68, 68, 68);
+    border-color: rgb(221, 221, 221);
+    padding-left: 5px !important;
+    padding-right: 10px !important;
+    padding-bottom: 5px;
+    height: 39px;
+}
+#durationCtFormFilter .dropdown-toggle::after {
+    margin-top: 1px;
+}
+#filter-ct-form-text{
+    font-family: var(--bs-body-font-family);
+    font-size: 16px;
+    margin-left: 5px;
+}
+.fs14 { font-size: 14px; }

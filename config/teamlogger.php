@@ -1,0 +1,10 @@
+<?php
+
+return [
+    'TEAMLOGGER_API_URL' => env('TEAMLOGGER_API_URL', 'https://api2.teamlogger.com/api/'),
+
+    'TEAMLOGGER_API_BEARER_TOKEN' => env('TEAMLOGGER_API_BEARER_TOKEN', ''),
+    'TEAMLOGGER_ROOT_BEARER_TOKEN' => env('TEAMLOGGER_ROOT_BEARER_TOKEN', ''),
+    'TEAMLOGGER_COMPANY_ID' => env('TEAMLOGGER_COMPANY_ID', ''),
+
+];
