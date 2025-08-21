@@ -9,17 +9,16 @@ class HomeController extends Controller
 {
     public function home()
     {
-
         $user = Auth::user();
         $subscription = null;
+        $purchasedPlanIds = null;
 
         if ($user) {
-            $subscription = Subscription::with('plan')->where('user_id', $user->id)
-                ->whereIn('status', ['active','soon_to_expire'])
-                ->where('ends_at', '>=', now())
-                ->first();
+            $subscription = Subscription::with('plan')->where('user_id', $user->id)->whereIn('status', ['active', 'pending','soon_to_expire'])->where('ends_at', '>=', now())->get();
+            $purchasedPlanIds = $subscription->pluck('plan.*.id')->flatten()->toArray();
         }
+
         $plans = Plan::all();
-        return view('admin.home', compact('plans', 'subscription'));
+        return view('admin.home', compact('plans', 'subscription', 'purchasedPlanIds'));
     }
 }

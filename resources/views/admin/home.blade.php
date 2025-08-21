@@ -32,58 +32,96 @@
 @endsection
 
 @section('content')
-<div class="py-2">
-    @if(!$subscription)
-        <div class="row g-4">
-            @foreach($plans as $plan)
-                <div class="col-md-4 mt-3">
-                    <div class="pricing-card">
-                        {{-- Plan Name --}}
-                        <h4>{{ ucfirst($plan->name) }}</h4>
-
-                        {{-- Plan Price (show discounted if available) --}}
-                        <div class="pricing-price">
-                            @if($plan->discounted_price && $plan->discounted_price < $plan->price)
-                                <span class="text-danger">
-                                    ${{ number_format($plan->discounted_price, 2) }}
+<div class="py-2 mt-1">
+    @if($subscription->isNotEmpty())
+    <div class="row">
+        @foreach($subscription as $sub)
+            @foreach($sub->plan as $plan)
+                <div class="col-md-6 mb-3 d-flex">
+                    <div class="card border-success shadow-sm w-100 h-100">
+                        <div class="card-body d-flex flex-column justify-content-between">
+                            <h5 class="card-title d-flex justify-content-between align-items-center">
+                                <span>{{ ucfirst($plan->name) }}</span>
+                                <span class="badge 
+                                    {{ $sub->status === 'active' ? 'bg-success' : ($sub->status === 'pending' ? 'bg-info text-dark' : 'bg-warning text-dark') }}">
+                                    {{ ucfirst($sub->status) }}
                                 </span>
-                                <small class="text-muted"><del>${{ number_format($plan->price, 2) }}</del></small>
+                            </h5>
+    
+                            @if($sub->status === 'pending')
+                                <p class="card-text text-muted mb-0 mt-auto">
+                                    This plan will become active after your current plan expires.
+                                </p>
                             @else
-                                ${{ number_format($plan->price, 2) }}
+                                <div class="mt-auto">
+                                    <p class="card-text mb-1">
+                                        <strong>Valid Until:</strong> {{ $sub->ends_at?->format('M d, Y') ?? '—' }}
+                                    </p>
+                                    <p class="card-text text-muted mb-0">
+                                        Started on {{ $sub->starts_at?->format('M d, Y') ?? '—' }}
+                                    </p>
+                                </div>
                             @endif
-                            <small>/ {{$plan->interval}}</small>
                         </div>
+                    </div>
+                </div>
+            @endforeach
+        @endforeach
+    </div>
+    @endif
+    
 
-                        {{-- Plan Description --}}
-                        <p>{{ $plan->description ?? 'No description available.' }}</p>
+    <div class="row g-4">
+        @foreach($plans as $plan)
+            <div class="col-md-4 mt-3">
+                <div class="pricing-card">
+                    {{-- Plan Name --}}
+                    <h4>{{ ucfirst($plan->name) }}</h4>
 
-                        {{-- Features (optional if you store as JSON or related table) --}}
-                        @if(!empty($plan->features))
-                            <ul class="pricing-features">
-                                @foreach(json_decode($plan->features, true) as $feature)
-                                    <li>{{ $feature }}</li>
-                                @endforeach
-                            </ul>
+                    {{-- Plan Price (show discounted if available) --}}
+                    <div class="pricing-price">
+                        @if($plan->discounted_price && $plan->discounted_price < $plan->price)
+                            <span class="text-danger">
+                                ${{ number_format($plan->discounted_price, 2) }}
+                            </span>
+                            <small class="text-muted"><del>${{ number_format($plan->price, 2) }}</del></small>
+                        @else
+                            ${{ number_format($plan->price, 2) }}
                         @endif
+                        <small>/ {{$plan->interval}}</small>
+                    </div>
 
-                        {{-- Buy Now Form --}}
+                    {{-- Plan Description --}}
+                    <p>{{ $plan->description ?? 'No description available.' }}</p>
+
+                    {{-- Features (optional if you store as JSON or related table) --}}
+                    @if(!empty($plan->features))
+                        <ul class="pricing-features">
+                            @foreach(json_decode($plan->features, true) as $feature)
+                                <li>{{ $feature }}</li>
+                            @endforeach
+                        </ul>
+                    @endif
+
+                    {{-- Buy Now Form --}}
+                    @if(in_array($plan->id, $purchasedPlanIds))
+                        <div class="d-flex justify-content-center">
+                            <button type="button" class="btn btn-secondary" disabled>Already Purchased</button>
+                        </div>
+                    @else
                         <form action="{{ route('select.plan') }}" method="POST">
                             @csrf
                             <input type="hidden" name="plan_id" value="{{ $plan->id }}">
                             <input type="hidden" name="plan_name" value="{{ $plan->name }}">
-                            <button type="submit" class="btn btn-primary buy-plan">
-                                Buy Now
-                            </button>
+                            <div class="d-flex justify-content-center">
+                                <button type="submit" class="btn btn-primary buy-plan">Buy Now</button>
+                            </div>
                         </form>
-                    </div>
+                    @endif
                 </div>
-            @endforeach
-        </div>
-    @else
-        <div class="alert alert-success">
-            You are currently on the <strong>{{ ucfirst($subscription->plan->name ?? '-') }}</strong> plan until {{ \Carbon\Carbon::parse($subscription->ends_at)->format('M d, Y') }}.
-        </div>
-    @endif
+            </div>
+        @endforeach
+    </div>
 </div>
 @endsection
 

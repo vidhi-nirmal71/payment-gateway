@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
        $schedule->command('subscriptions:update-status')->dailyAt('11:00');
+       $schedule->command('subscriptions:activate-next')->hourly();
     }
 
     /**

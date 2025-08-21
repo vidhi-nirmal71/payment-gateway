@@ -18,8 +18,16 @@ class SubscriptionController extends Controller
     public function selectPlan(Request $request)
     {
         $user = auth()->user();
+
+        // If user has active auto-renew subscription → block further purchase
+        $activeAutoRenew = DbSubscription::where('user_id', $user->id)->where('auto_renew', true)->where('status', 'active')->first();
+
+        if ($activeAutoRenew) {
+            return back()->with('error', 'You already have an auto-renew subscription. Please disable auto-renew before purchasing another plan.');
+        }
+
         session(['selected_plan' => $request->plan_id]);
-        return view('admin.payment-form', ['plan' => $request->plan_name, 'plan_id' => $request->plan_id,'user' => $user]);
+        return view('admin.payment-form', ['plan' => $request->plan_name,'plan_id' => $request->plan_id,'user' => $user]);
     }
 
     public function processPayment(Request $request)
@@ -44,44 +52,34 @@ class SubscriptionController extends Controller
             if(!$plan) {
                 return response()->json(['success' => false, 'message' => 'Plan not found'], 500);
             }
+            $existing = DbSubscription::where('user_id', $user->id)->whereIn('status', ['pending', 'active', 'soon_to_expire'])->first();
 
-            // 1. Create customer if not exists
-            if (!$user->stripe_customer_id) {
-                $customer = Customer::create([
-                    'email' => $user->email,
-                    'name' => $user->name,
-                ]);
-                $user->stripe_customer_id = $customer->id;
-                $user->save();
+            $is_active = 0;
+            $auto_renew = 0;
+            $status = 'pending';
+            $stripeSubscriptionId = null;
+
+            if (!$existing) {
+                $stripeSubscription = $this->stripeCreate($request, $user, $plan);
+                $is_active = 1;
+                $auto_renew = 1;
+                $status = 'active';
+                $stripeSubscriptionId = $stripeSubscription->id;
             }
 
-            // 2. Attach payment method to customer
-            $paymentMethod = PaymentMethod::retrieve($request->payment_method_id);
-            $paymentMethod->attach(['customer' => $user->stripe_customer_id]);
-
-            // 3. Set payment method as default
-            Customer::update($user->stripe_customer_id, [
-                'invoice_settings' => [
-                    'default_payment_method' => $request->payment_method_id,
-                ],
-            ]);
-
-            // 4. Create subscription
-            $stripeSubscription = Subscription::create([
-                'customer' => $user->stripe_customer_id,
-                'items' => [['price' => $plan->stripe_price_id]],
-                'expand' => ['latest_invoice.payment_intent'],
-            ]);
-
             // 5. Save subscription in DB
-            DbSubscription::create([
+            $subscription =  DbSubscription::create([
                 'user_id' => $user->id,
-                'plan_id' => $plan->id,
-                'stripe_subscription_id' => $stripeSubscription->id,
+                // 'plan_id' => $plan->id,
                 'starts_at' => now(),
                 'ends_at' => $plan->interval === 'year' ? now()->addYear() : now()->addMonth(),
-                'status' => 'active',
+                'stripe_subscription_id' => $stripeSubscriptionId,
+                'status'                 => $status,
+                'is_active'              => $is_active,
+                'auto_renew'             => $auto_renew,
             ]);
+
+            $subscription->plan()->syncWithoutDetaching([$plan->id]);
 
             return response()->json(['success' => true, 'message' => 'Subscription successful!']);
         } catch (\Exception $e) {
@@ -89,10 +87,41 @@ class SubscriptionController extends Controller
         }
     }
 
+    private function stripeCreate($request, $user, $plan)
+    {
+        // 1. Create customer if not exists
+        if (!$user->stripe_customer_id) {
+            $customer = Customer::create([
+                'email' => $user->email,
+                'name'  => $user->name,
+            ]);
+            $user->stripe_customer_id = $customer->id;
+            $user->save();
+        }
+
+        // 2. Attach payment method
+        $paymentMethod = PaymentMethod::retrieve($request->payment_method_id);
+        $paymentMethod->attach(['customer' => $user->stripe_customer_id]);
+
+        // 3. Set default payment method
+        Customer::update($user->stripe_customer_id, [
+            'invoice_settings' => [
+                'default_payment_method' => $request->payment_method_id,
+            ],
+        ]);
+
+        // 4. Create Stripe subscription
+        return Subscription::create([
+            'customer' => $user->stripe_customer_id,
+            'items'    => [['price' => $plan->stripe_price_id]],
+            'expand'   => ['latest_invoice.payment_intent'],
+        ]);
+    }
+
     public function settings()
     {
         $user = auth()->user();
-        $subscription = $user->subscription()->with('plan')->first();
+        $subscription = $user->subscription()->with('plan')->get();
         $plans = Plan::all();
 
         return view('admin.settings', compact('subscription', 'plans'));
