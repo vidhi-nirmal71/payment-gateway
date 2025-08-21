@@ -19,8 +19,10 @@ class Plan extends Model
         'stripe_price_id'
     ];
 
-    public function subscriptions() {
-        return $this->hasMany(Subscription::class);
+    public function subscriptions()
+    {
+        return $this->belongsToMany(Subscription::class, 'plan_subscription')
+                    ->withTimestamps();
     }
 
     public function displayPrice(): string {

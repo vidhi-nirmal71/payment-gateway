@@ -79,7 +79,7 @@
                 successMessage(data.message); // Replace with toast
                 window.location.href = "{{ route('home') }}";
             } else {
-                successMessage(data.message); // Replace with toast
+                errorMessage(data.message); // Replace with toast
             }
         })
         .catch(err => {
