@@ -83,14 +83,14 @@ Route::get('/check-ip', function () {
         });
        
         // Command For Developer - KEEP IN LAST
-        Route::middleware('check_user_for_run_artisan_command')->group(function () {
-            Route::get('redis-clear-db', [DeveloperControlController::class, 'redisClear']);    // Clear redis data
-            Route::get('wfh-get-data-from-team-logger', [DeveloperControlController::class, 'fetchRecordFromLoggerWFH']);    // Get logger data and add to puch data for WFH
-            Route::get('punch-sync', [DeveloperControlController::class, 'punchDataSync']);     // Sync punch row data to punch processed data
-            Route::get('set-cache', [DeveloperControlController::class, 'setCache']);   // set cache
-            Route::get('clear-cache', [DeveloperControlController::class, 'clearCache']);   // php artisan optimize:clear
-            Route::get('migrate-table', [DeveloperControlController::class, 'migrateTable']);   // php artisan migrate
-            Route::get('early-count', [DeveloperControlController::class, 'earlyDayCountDashboard']);   // dashboard:early-leaving-count
-            Route::get('redis-value/{key}', [DeveloperControlController::class, 'getRedisValueFromKey']);   // get redis value
-        });
+        // Route::middleware('check_user_for_run_artisan_command')->group(function () {
+        //     Route::get('redis-clear-db', [DeveloperControlController::class, 'redisClear']);    // Clear redis data
+        //     Route::get('wfh-get-data-from-team-logger', [DeveloperControlController::class, 'fetchRecordFromLoggerWFH']);    // Get logger data and add to puch data for WFH
+        //     Route::get('punch-sync', [DeveloperControlController::class, 'punchDataSync']);     // Sync punch row data to punch processed data
+        //     Route::get('set-cache', [DeveloperControlController::class, 'setCache']);   // set cache
+        //     Route::get('clear-cache', [DeveloperControlController::class, 'clearCache']);   // php artisan optimize:clear
+        //     Route::get('migrate-table', [DeveloperControlController::class, 'migrateTable']);   // php artisan migrate
+        //     Route::get('early-count', [DeveloperControlController::class, 'earlyDayCountDashboard']);   // dashboard:early-leaving-count
+        //     Route::get('redis-value/{key}', [DeveloperControlController::class, 'getRedisValueFromKey']);   // get redis value
+        // });
     });
