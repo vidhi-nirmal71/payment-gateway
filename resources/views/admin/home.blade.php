@@ -69,7 +69,6 @@
         @endforeach
     </div>
     @endif
-    
 
     <div class="row g-4">
         @foreach($plans as $plan)
@@ -77,7 +76,6 @@
                 <div class="pricing-card">
                     {{-- Plan Name --}}
                     <h4>{{ ucfirst($plan->name) }}</h4>
-
                     {{-- Plan Price (show discounted if available) --}}
                     <div class="pricing-price">
                         @if($plan->discounted_price && $plan->discounted_price < $plan->price)

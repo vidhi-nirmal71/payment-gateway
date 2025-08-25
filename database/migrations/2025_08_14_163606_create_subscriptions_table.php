@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('subscriptions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('plan_id')->constrained()->onDelete('cascade');
-            $table->string('stripe_subscription_id');
+            $table->string('stripe_subscription_id')->nullable();
             $table->boolean('auto_renew')->default(1);
-            $table->dateTime('starts_at');
-            $table->dateTime('ends_at');
-            $table->enum('status', ['active', 'soon_to_expire', 'expired'])->default('active');
+            $table->timestamp('starts_at')->nullable();
+            $table->timestamp('ends_at')->nullable();
+            $table->enum('status', ['pending', 'active', 'soon_to_expire', 'expired'])->default('pending')->after('id');
+            $table->boolean('is_active')->default(0);
             $table->timestamps();
         });
     }
