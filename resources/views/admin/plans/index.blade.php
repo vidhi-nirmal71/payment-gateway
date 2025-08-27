@@ -25,13 +25,14 @@
               <td><code>{{ $plan->stripe_price_id }}</code></td>
               <td>{{ $plan->interval }}</td>
               <td>{{ $plan->description }}</td>
-              {{-- <td class="text-end">
-                <a class="btn btn-sm btn-outline-secondary" href="{{ route('admin.plans.edit',$plan) }}">Edit</a>
-                <form action="{{ route('admin.plans.destroy',$plan) }}" method="POST" class="d-inline">
-                  @csrf @method('DELETE')
-                  <button class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete?')">Delete</button>
+              <td class="text-end">
+                <a class="btn btn-sm btn-outline-secondary" href="{{ route('admin.plans.edit', encrypt($plan->id)) }}">Edit</a>
+                <form action="{{ route('admin.plans.destroy', encrypt($plan->id)) }}" method="POST" class="d-inline">
+                    @csrf
+                    @method('DELETE')
+                    <button class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete?')">Delete</button>
                 </form>
-              </td> --}}
+              </td>
             </tr>
           @empty
             <tr><td colspan="5">No plans yet.</td></tr>

@@ -66,6 +66,7 @@ class PlanController extends Controller
 
     public function edit($id)
     {
+        $id = decrypt($id);
         $plan = Plan::findOrFail($id);
         return view('admin.plans.edit', compact('plan'));
     }
@@ -108,6 +109,7 @@ class PlanController extends Controller
 
     public function destroy($id)
     {
+        $id = decrypt($id);
         $plan = Plan::findOrFail($id);
         Stripe::setApiKey(env('STRIPE_SECRET'));
 
