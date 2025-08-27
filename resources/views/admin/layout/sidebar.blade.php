@@ -27,12 +27,16 @@
                 </a>
             </li>
         @endif
-        <li class="menu-item @if (request()->routeIs('subscription.settings')) active @endif">
-            <a href="{{ route('subscription.settings') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bxs-cog"></i>
-                <div data-i18n="Subscription">Settings</div>
-            </a>
-        </li>
+
+        @if(auth()->check() && auth()->user()->is_admin != 1)
+            <li class="menu-item @if (request()->routeIs('subscription.settings')) active @endif">
+                <a href="{{ route('subscription.settings') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bxs-cog"></i>
+                    <div data-i18n="Subscription">Settings</div>
+                </a>
+            </li>
+        @endif
+
         <li class="menu-item @if (request()->routeIs('payments.history')) active @endif">
             <a href="{{ route('payments.history') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-credit-card"></i>

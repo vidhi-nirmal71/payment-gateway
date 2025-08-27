@@ -3,11 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\AdminPaymentFailedMail;
+use App\Mail\PaymentFailedMail;
 use App\Models\Plan;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Stripe\Product;
 use Stripe\Price;
 use Stripe\Stripe;
+use Stripe\Webhook;
 
 class PlanController extends Controller
 {
@@ -116,4 +121,45 @@ class PlanController extends Controller
         return redirect()->route('admin.plans.index')->with('success', 'Plan deleted successfully.');
     }
 
+    public function handle(Request $request)
+    {
+        $payload = $request->getContent();
+        $sig_header = $_SERVER['HTTP_STRIPE_SIGNATURE'];
+        $secret = config('services.stripe.webhook_secret');
+
+        try {
+            $event = Webhook::constructEvent($payload, $sig_header, $secret);
+        } catch (\Exception $e) {
+            return response('Invalid signature', 400);
+        }
+
+        switch ($event->type) {
+            case 'checkout.session.completed':
+                $session = $event->data->object;
+                // Mark subscription active in DB
+                break;
+
+            case 'invoice.payment_succeeded':
+                $invoice = $event->data->object;
+                // Extend subscription in DB
+                break;
+
+            case 'invoice.payment_failed':
+                $invoice = $event->data->object;
+
+                // 1. Get customer info from Stripe
+                $customer = \Stripe\Customer::retrieve($invoice->customer);
+
+                // 2. Find user in DB by Stripe customer ID
+                $user = User::where('stripe_customer_id', $customer->id)->first();
+
+                if ($user) {
+                    Mail::to($user->email)->send(new PaymentFailedMail($invoice));
+                    Mail::to('admin@example.com')->send(new AdminPaymentFailedMail($user, $invoice));
+                }
+                break;
+        }
+
+        return response('Webhook received', 200);
+    }
 }

@@ -12,18 +12,13 @@ class ActivateNextPlan extends Command
 
     public function handle()
     {
-        $expired = Subscription::where('status','active')
-            ->where('ends_at','<', now())
-            ->get();
+        $expired = Subscription::where('status','active')->where('ends_at','<', now())->get();
 
         foreach ($expired as $sub) {
             $sub->update(['status'=>'completed','is_active'=>false]);
 
             // Find next pending
-            $next = Subscription::where('user_id',$sub->user_id)
-                    ->where('status','pending')
-                    ->orderBy('id')
-                    ->first();
+            $next = Subscription::where('user_id',$sub->user_id)->where('status','pending')->orderBy('id')->first();
 
             if ($next) {
                 $plan = $next->plan()->first();

@@ -17,13 +17,9 @@ class UpdateSubscriptions extends Command
     {
         $today = Carbon::now();
 
-        Subscription::where('status', 'active')
-            ->whereDate('ends_at', '<=', $today->copy()->addDays(3))
-            ->update(['status' => 'soon_to_expire']);
+        Subscription::where('status', 'active')->whereDate('ends_at', '<=', $today->copy()->addDays(3))->update(['status' => 'soon_to_expire']);
 
-        Subscription::where('status', 'soon_to_expire')
-            ->whereDate('ends_at', '<', $today)
-            ->update(['status' => 'expired']);
+        Subscription::where('status', 'soon_to_expire')->whereDate('ends_at', '<', $today)->update(['status' => 'expired']);
 
         $soonToExpire = Subscription::where('status', 'soon_to_expire')->get();
         foreach ($soonToExpire as $sub) {

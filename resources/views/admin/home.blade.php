@@ -111,9 +111,15 @@
                             @csrf
                             <input type="hidden" name="plan_id" value="{{ $plan->id }}">
                             <input type="hidden" name="plan_name" value="{{ $plan->name }}">
-                            <div class="d-flex justify-content-center">
-                                <button type="submit" class="btn btn-primary buy-plan">Buy Now</button>
-                            </div>
+                            @if(auth()->check() && auth()->user()->is_admin != 1)
+                                <div class="d-flex justify-content-center">
+                                    <button type="submit" class="btn btn-primary buy-plan">Buy Now</button>
+                                </div>
+                            @else 
+                                <div class="d-flex justify-content-center">
+                                    <button type="button" class="btn btn-secondary" disabled>Admin Cannot Purchase</button>
+                                </div>
+                            @endif
                         </form>
                     @endif
                 </div>

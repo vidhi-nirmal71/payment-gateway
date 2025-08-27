@@ -53,6 +53,7 @@ Route::get('/check-ip', function () {
 
         Route::middleware(['auth','is_admin'])->prefix('admin')->name('admin.')->group(function() {
             Route::resource('plans', PlanController::class);
+            Route::post('/stripe/webhook', [PlanController::class, 'handle']);
         });
         
 
