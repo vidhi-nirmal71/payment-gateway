@@ -115,7 +115,6 @@ class PlanController extends Controller
         Product::update($plan->stripe_product_id, [
             'active' => false,
         ]);
-
         $plan->delete();
 
         return redirect()->route('admin.plans.index')->with('success', 'Plan deleted successfully.');
