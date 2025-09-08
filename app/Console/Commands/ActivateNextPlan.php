@@ -19,7 +19,6 @@ class ActivateNextPlan extends Command
 
             // Find next pending
             $next = Subscription::where('user_id',$sub->user_id)->where('status','pending')->orderBy('id')->first();
-
             if ($next) {
                 $plan = $next->plan()->first();
                 $this->activate($next, $plan);

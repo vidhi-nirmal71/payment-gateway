@@ -21,10 +21,6 @@
         .cakeHeader h1{
             font-size: 5rem !important;
         }
-        /* .mainBodyContent{
-            padding-right: 1rem !important;
-            padding-left: 1rem !important;
-        } */
     </style>
 
     <!-- Core CSS -->
