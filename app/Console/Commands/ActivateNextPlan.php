@@ -17,7 +17,7 @@ class ActivateNextPlan extends Command
         foreach ($expired as $sub) {
             $sub->update(['status'=>'completed','is_active'=>false]);
 
-            // Find next pending
+            // Find next pending  
             $next = Subscription::where('user_id',$sub->user_id)->where('status','pending')->orderBy('id')->first();
             if ($next) {
                 $plan = $next->plan()->first();
