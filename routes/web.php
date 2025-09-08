@@ -3,9 +3,7 @@
 use App\Http\Controllers\Admin\PlanController;
 use App\Http\Controllers\Admin\SubscriptionController;
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\DeveloperControlController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\NotificationController;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 
@@ -25,7 +23,7 @@ require __DIR__.'/auth.php';
 Route::get('/check-ip', function () {
     Log::info('IP from Laravel: ' . request()->ip());
     dd(request()->ip(), request()->server('HTTP_X_FORWARDED_FOR'));
-});  
+});
 
     // Registration page for mobile app use
     Route::get('registration', [HomeController::class, 'registrationFormForApp'])->name('user.register.index');
@@ -45,7 +43,6 @@ Route::get('/check-ip', function () {
         Route::get('/subscription/settings', [SubscriptionController::class, 'settings'])->name('subscription.settings');
         Route::post('/subscription/renew/{id}', [SubscriptionController::class, 'renew'])->name('subscription.renew');
         Route::post('/subscription/change', [SubscriptionController::class, 'changePlan'])->name('subscription.change');
-
         Route::post('/subscription/{subscription}/auto-renew', [SubscriptionController::class, 'toggleAutoRenew'])->name('subscription.autoRenew.toggle');
 
         Route::get('/payments', [SubscriptionController::class, 'paymentHistory'])->name('payments.history');
