@@ -1,14 +1,8 @@
 <?php
 
-use App\Http\Controllers\Admin\AnnouncementController;
-use App\Http\Controllers\Admin\LeaveController;
-use App\Http\Controllers\Admin\NoticesAndAppreciationController;
 use App\Http\Controllers\Admin\PunchDataController;
-use App\Http\Controllers\Api\AttendanceApiController;
 use App\Http\Controllers\Api\AuthApiController;
-use App\Http\Controllers\Api\ClientBucketApiController;
 use App\Http\Controllers\Api\DashboardApiController;
-use App\Http\Controllers\Api\LeaveApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
