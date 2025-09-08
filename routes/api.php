@@ -17,15 +17,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/addrawdata/{employeeCode}/{inOutDate}/{inOutTime}/{deviceID}/{deviceMode}/{attendanceDate}/{trackingId}', [PunchDataController::class, 'addRawData']);
+// Route::get('/addrawdata/{employeeCode}/{inOutDate}/{inOutTime}/{deviceID}/{deviceMode}/{attendanceDate}/{trackingId}', [PunchDataController::class, 'addRawData']);
 
-Route::post('/login', [AuthApiController::class, 'login']);
-Route::get('/registration/settings', [DashboardApiController::class, 'registrationLinkSetting']);
+// Route::post('/login', [AuthApiController::class, 'login']);
+// Route::get('/registration/settings', [DashboardApiController::class, 'registrationLinkSetting']);
 
-Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/logout', [AuthApiController::class, 'logout']);
+// Route::middleware('auth:sanctum')->group(function () {
+//     Route::post('/logout', [AuthApiController::class, 'logout']);
 
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    });
-});
+//     Route::get('/user', function (Request $request) {
+//         return $request->user();
+//     });
+// });
