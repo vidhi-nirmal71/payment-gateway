@@ -21,9 +21,9 @@ return [
         'scheme' => 'https',
     ],
 
-    'postmark' => [
-        'token' => env('POSTMARK_TOKEN'),
-    ],
+    // 'postmark' => [
+    //     'token' => env('POSTMARK_TOKEN'),
+    // ],
 
     'ses' => [
         'key' => env('AWS_ACCESS_KEY_ID'),
@@ -31,14 +31,17 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
-    'slack' => [
-        'client_id' => env('SLACK_CLIENT_ID'),
-        'client_secret' => env('SLACK_CLIENT_SECRET'),
-    ],
+    // 'slack' => [
+    //     'client_id' => env('SLACK_CLIENT_ID'),
+    //     'client_secret' => env('SLACK_CLIENT_SECRET'),
+    // ],
     'stripe' => [
         'key'    => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
         'webhook_secret' => env('STRIPE_WEBHOOK_SECRET'),
     ],
-
+    'posthog' => [
+        'api_key' => env('POSTHOG_API_KEY'),
+        'host' => env('POSTHOG_HOST', 'https://app.posthog.com'),
+    ]
 ];
