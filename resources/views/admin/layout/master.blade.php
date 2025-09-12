@@ -123,142 +123,6 @@
         <div class="layout-overlay layout-menu-toggle"></div>
     </div>
 
-    {{-- Birthday wish model --}}
-    @php
-        $isYourBirthday = false;
-        $isYourBirthdayBelated = false;
-        if(auth()->user()->date_of_birth){
-            $dateOfBirth = Carbon\Carbon::createFromFormat('Y-m-d', auth()->user()->date_of_birth);
-            $today = Carbon\Carbon::now();
-            if ($dateOfBirth->format('md') === $today->format('md')) {
-                //today is user's birthday
-                $isYourBirthday = true; 
-            }else{
-                // belated birthday logic
-                $today = Carbon\Carbon::now();
-                $lastWorkingDay = getLastWorkingDay($today);
-                $dob = Carbon\Carbon::parse(auth()->user()->date_of_birth);
-
-                $month = $dob->format('m');
-                $day = $dob->format('d');
-                $currentYear = $today->year;
-
-                $dob = Carbon\Carbon::create($currentYear, $month, $day);
-                if ($dob->between($lastWorkingDay, $today)) {
-                    $isYourBirthdayBelated = true;
-                }
-            }
-        }
-
-    @endphp
-
-    {{-- Work anniversary model --}}
-    @php
-        $isYourWorkAnniversaryDay = false;
-        $isYourWorkAnniversaryDayBelated = false;
-
-        if(auth()->user()->joining_date){
-            $dateOfWorkAnn = Carbon\Carbon::createFromFormat('Y-m-d', auth()->user()->joining_date);
-            $today = Carbon\Carbon::now();
-            if ($dateOfWorkAnn->format('md') === $today->format('md') && $dateOfWorkAnn->year < $today->year) {
-                //today is user's Work Anniversary
-                $isYourWorkAnniversaryDay = true; 
-            }else{
-                // belated Work Anniversary logic
-                $today = Carbon\Carbon::now();
-                $lastWorkingDay = getLastWorkingDay($today);
-                $dob = Carbon\Carbon::parse(auth()->user()->joining_date);
-
-                $month = $dob->format('m');
-                $day = $dob->format('d');
-                $currentYear = $today->year;
-
-                $dob = Carbon\Carbon::create($currentYear, $month, $day);
-                if ($dob->between($lastWorkingDay, $today) && $dateOfWorkAnn->year < $today->year) {
-                    $isYourWorkAnniversaryDayBelated = true;
-                }
-            }
-        }
-    @endphp
-
-    @if($isYourBirthday || $isYourBirthdayBelated)
-        <div class="modal fade show" id="birthdayModal" tabindex="-1" style="display: none;" aria-modal="true" role="dialog" data-bs-backdrop="static">
-            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">&nbsp;</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body pt-xl-0">
-                        <div class="row">
-                            <div class="col-12 col-lg-12">
-                                <div class="d-flex justify-content-center">
-                                    <div class="cakeHeader"><h1> 🎂 </h1></div>
-                                </div>
-                                <div class="text-center">
-                                    @if($isYourBirthday)
-                                        <h3>Happy Birthday {{auth()->user()->name}}!!! 🎊 🎉 🥳</h3>
-                                        <p class="mb-lg-0">Be happy! Today is the day you were brought into this world to be a blessing and inspiration to the people around you! You are a wonderful person! May you be given more birthdays to fulfill all of your dreams!</p>
-
-                                    @elseif($isYourBirthdayBelated)
-                                        <h3>Belated Happy Birthday {{auth()->user()->name}}!!! 🎊 🎉 🥳</h3>
-                                        <p class="mb-lg-0">Though it's late, know that you are a blessing and inspiration to those around you. Wishing you joy and fulfillment as you continue on your journey. May the year ahead be filled with all your dreams coming true!</p>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endif
-
-    @if($isYourWorkAnniversaryDay || $isYourWorkAnniversaryDayBelated)
-        <div class="modal fade show" id="workAnniversaryModal" tabindex="-1" style="display: none;" aria-modal="true" role="dialog" data-bs-backdrop="static">
-            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">&nbsp;</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body pt-xl-0">
-                        <div class="row">
-                            <div class="col-12 col-lg-12">
-                                <div class="d-flex justify-content-center">
-                                    <div class="cakeHeader"><h1> 🎂 </h1></div>
-                                </div>
-                                <div class="text-center">
-                                    @if($isYourWorkAnniversaryDay)
-                                        <h3>Happy Work Anniversary {{auth()->user()->name}}!!! 🎊 🎉 🥳</h3>
-                                        <p class="mb-lg-0">✨ You've been an integral part of our journey, and we're grateful for your contributions. Wishing you continued success and growth! 🌟</p>
-                                    @elseif($isYourWorkAnniversaryDayBelated)
-                                        <h3>Belated Happy Work Anniversary {{auth()->user()->name}}!!! 🎊 🎉 🥳</h3>
-                                        <p class="mb-lg-0">🎉 Congratulations on your work anniversary, {{auth()->user()->name}}! Your dedication and hard work continue to inspire us all. Here's to many more successful years together! 🏆</p>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endif
-
-    {{-- Birthday and Workanniversary wishes --}}
-    <div class="modal fade" id="celebrationModal" tabindex="-1" style="display: none;" aria-modal="true" role="dialog" data-bs-backdrop="static">
-        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title"></h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body pt-xl-0" id="celebrationContent">
-                    <!-- Content will be injected by JS -->
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script> var APP_URL = "{{ URL::to('/') }}";</script>
     <script src="{{ asset('admin') }}/js/jquery.min.js"></script>
     <script src="{{ asset('admin') }}/vendor/js/bootstrap.js"></script>
@@ -273,20 +137,7 @@
     <script src="{{ asset('admin') }}/js/jquery.validate.min.js?v=0.1"></script>
     <script src="{{ asset('admin') }}/js/additional-methods.min.js"></script>
     <script src="{{ asset('admin') }}/js/jquery.form.min.js"></script>
-    <script src="{{ asset('admin') }}/js/common.js?v=0.05"></script>
-    {{-- <script src="https://js.pusher.com/7.2/pusher.min.js"></script> --}}
-    {{-- <script>
-        var userID = {{ json_encode(Auth::id()) }};
-    
-        var pusher = new Pusher('6a3053a1195f337f3607', {
-            cluster: 'mt1'
-        });
-    
-        var channel = pusher.subscribe('reminder-channel-' + userID);
-        channel.bind('reminder-event-' + userID, function(data) {
-            alert(JSON.stringify(data));
-        });
-    </script> --}}
+    <script src="{{ asset('admin') }}/js/common.js?v=0.01"></script>
     <script>
         @if (session('message'))
             showToast('bg-success', "{{ session('message') }}");
@@ -300,6 +151,25 @@
             $('.toast').removeClass('bg-danger bg-success');
         });
     </script>
+
+<!-- PostHog Analytics -->
+<script>
+    !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+    posthog.init("{{ config('services.posthog.api_key') }}", {
+        api_host: "{{ config('services.posthog.host') }}",
+        autocapture: true,
+        capture_pageview: true,
+        session_recording: true,
+    });
+
+    @if(auth()->check())
+        posthog.identify("{{ auth()->user()->id }}", {
+            name: "{{ auth()->user()->name }}",
+            email: "{{ auth()->user()->email }}"
+        });
+    @endif
+</script>
+  
     <script src="{{ asset('admin/js/confetti.browser.min.js') }}"></script>
     @yield('script')
 

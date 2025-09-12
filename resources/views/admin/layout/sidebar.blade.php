@@ -44,11 +44,13 @@
             </a>
         </li>
 
-        <li class="menu-item @if (request()->routeIs('invoices.index')) active @endif">
-            <a href="{{ route('invoices.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bxs-file"></i>
-                <div data-i18n="Analytics">Invoices</div>
-            </a>
-        </li>       
+        @if(!empty($showInvoices) && $showInvoices)
+            <li class="menu-item @if (request()->routeIs('invoices.index')) active @endif">
+                <a href="{{ route('invoices.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bxs-file"></i>
+                    <div data-i18n="Analytics">Invoices</div>
+                </a>
+            </li>
+        @endif
     </ul>
 </aside>
